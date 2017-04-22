@@ -1,0 +1,1 @@
+int querySQL(int * lable, int bmpWidth,int bmpHeight);
