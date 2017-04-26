@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "lable.h"
 #include <iostream>
 #include <string.h>
@@ -70,6 +71,8 @@ int getRegion(int * lable,int width,int height){
 
 
 int * Lable(int * data,int width,int height){
+
+	cout<<"ÕýÔÚ±àºÅ..."<<endl;
 
 	int *lable=new int[width*height];
 

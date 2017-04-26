@@ -2,3 +2,6 @@
 test.*
 *.asp
 *.plg
+val.*
+/ipch/*
+ReadMe.txt

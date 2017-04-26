@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "dilation.h"
 #include <malloc.h>
 #include<string.h> 

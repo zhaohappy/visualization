@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include<math.h>
 #include <iomanip> 
 #include <stdlib.h>
@@ -49,6 +50,7 @@ public:
 	void broaden(int n);//放大图片，n为放大倍数
 	void pixToBmp();//将像素信息转为bmp数据格式
 	void bmpToPix();//将bmp数据转换为像素数据
+	int * getLable();
 	~BMP();
 	BMP();
 };

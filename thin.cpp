@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include<iostream>
 using namespace std;
 void thinBoolBmp(int * data,int width,int height, bool f)//完成一次迭代
@@ -9,9 +10,10 @@ void thinBoolBmp(int * data,int width,int height, bool f)//完成一次迭代
 	 int h1=0;//代表X(H),等于1代表条件1满足
 	 int n1=0,n2=0;
 	 int h2=0,h3=0,h4=0;//分别代表其他条件是否满足
-      for(int i=0;i<height;i++)//子区域1的迭代
+	 int i,j,k,l,v;
+      for( i=0;i<height;i++)//子区域1的迭代
 	  {
-		   for(int j=0;j<width;j++)
+		   for( j=0;j<width;j++)
 		   {
 			   
                count=width*i+j;
@@ -22,7 +24,7 @@ void thinBoolBmp(int * data,int width,int height, bool f)//完成一次迭代
                {
 				   continue;
 			   }
-               for(int v=0;v<5;v++)//初始化b[v]
+               for( v=0;v<5;v++)//初始化b[v]
 			   {
                     b[v]=0;
 			   }
@@ -36,7 +38,7 @@ void thinBoolBmp(int * data,int width,int height, bool f)//完成一次迭代
 				x[7]=data[(i+1)*width+j-1];
                 x[8]=data[i*width+j-1];
 
-			   for(int l=1;l<4;l++)
+			   for( l=1;l<4;l++)
 				 {
 					if(x[2*l]==0&&(x[2*l+2]==1||x[2*l+1]==1))
 					{
@@ -47,7 +49,7 @@ void thinBoolBmp(int * data,int width,int height, bool f)//完成一次迭代
 			   {
 				   b[4]=1;
 			   } 
-			   for(int k=1;k<5;k++)//计算出h1的值
+			   for( k=1;k<5;k++)//计算出h1的值
 			   {
 				   h1+=b[k];
 			   }

@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "bmp.h"
 #include "dilation.h"
 #include "thin.h"
@@ -5,25 +6,52 @@
 #include <fstream>
 #include <stdlib.h>
 #include "lable.h"
+#include "sql.h"
+#include "div.h"
+#include "query.h"
 using namespace std;
-
-using namespace std;
+void prinfUsage(){
+	cout<<"usage error!"<<endl
+			<<"-e <source bmp> <destination bmp> ......................................................erosion"<<endl
+			<<"-d <source bmp> <destination bmp> ......................................................dilation"<<endl
+			<<"-t <source bmp> <destination bmp> ........................................................thin"<<endl
+			<<"-i <source bmp> <destination bmp> .........................................................inverse"<<endl
+			<<"-g <source bmp> <destination bmp> ........................................................gray"<<endl
+			<<"-l <source bmp> <destination bmp> ..........................................................lable"<<endl
+			<<"-s <source bmp> ...................................................................................................lable to sql"<<endl
+			<<"-u <times> <source bmp> <destination bmp> ......................................broaden"<<endl
+			<<"-b <threshold> <source gray bmp> <destination bool bmp> .........gray to bool"<<endl;
+}
 int main(int argc,char * argv[]){	
+	if(argc<2){
+		prinfUsage();
+		return 0;
+	}
 	int i;
 	char flag[3];
 	strcpy(flag,argv[1]);
+	if(flag[1]=='s'){
+		if(argc!=3){
+			prinfUsage();
+				return 0;
+			}
+		else{
+			BMP bmp;
+			if(!bmp.readBmp(argv[2]))
+			{
+				cout<<"open file failed! the file must be .bmp "<<endl;
+				return 0;
+			}
+			cout<<"source bmp info: width: "<<bmp.getWidth()<<" height: "<<bmp.getHeight()<<" bitCount: "<<bmp.getBitCount()<<endl;
+			bmp.bmpToBool(255);
+		    bmp.lableToBmp();
+			querySQL(bmp.getLable(),bmp.getWidth(),bmp.getHeight());
+			return 0;
+		}
+	}
 	if(flag[1]=='b'){
 		if(argc!=5){
-			cout<<"usage error!"<<endl
-				<<"-e <source bmp> <destination bmp> ..............................erosion"<<endl
-				<<"-d <source bmp> <destination bmp> ..............................dilation"<<endl
-				<<"-t <source bmp> <destination bmp> ..............................thin"<<endl
-				<<"-i <source bmp> <destination bmp> ..............................inverse"<<endl
-				<<"-g <source bmp> <destination bmp> ..............................gray"<<endl
-				<<"-l <source bmp> <destination bmp> ..............................lable"<<endl
-				<<"-u <times> <source bmp> <destination bmp> ......................broaden"<<endl
-				<<"-b <threshold> <source gray bmp> <destination bool bmp> ........gray to bool"<<endl;
-			
+			prinfUsage();
 			return 0;
 		}
 		else{
@@ -42,16 +70,7 @@ int main(int argc,char * argv[]){
 	}
 	else if(flag[1]=='u'){
 			if(argc!=5){
-			cout<<"usage error!"<<endl
-				<<"-e <source bmp> <destination bmp> ..............................erosion"<<endl
-				<<"-d <source bmp> <destination bmp> ..............................dilation"<<endl
-				<<"-t <source bmp> <destination bmp> ..............................thin"<<endl
-				<<"-i <source bmp> <destination bmp> ..............................inverse"<<endl
-				<<"-g <source bmp> <destination bmp> ..............................gray"<<endl
-				<<"-l <source bmp> <destination bmp> ..............................lable"<<endl
-				<<"-u <times> <source bmp> <destination bmp> ......................broaden"<<endl
-				<<"-b <threshold> <source gray bmp> <destination bool bmp> ........gray to bool"<<endl;
-			
+			prinfUsage();
 			return 0;
 		}
 		else{
@@ -70,15 +89,7 @@ int main(int argc,char * argv[]){
 	}
 	else{
 		if(argc!=4){
-			cout<<"usage error!"<<endl
-				<<"-e <source bmp> <destination bmp> ..............................erosion"<<endl
-				<<"-d <source bmp> <destination bmp> ..............................dilation"<<endl
-				<<"-t <source bmp> <destination bmp> ..............................thin"<<endl
-				<<"-i <source bmp> <destination bmp> ..............................inverse"<<endl
-				<<"-g <source bmp> <destination bmp> ..............................gray"<<endl
-				<<"-l <source bmp> <destination bmp> ..............................lable"<<endl
-				<<"-u <source bmp> <destination bmp> ..............................broaden"<<endl
-				<<"-b <threshold> <source gray bmp> <destination bool bmp> ........gray to bool"<<endl;
+			prinfUsage();
 			return 0;
 		}
 		else{
@@ -127,8 +138,6 @@ int main(int argc,char * argv[]){
 		bmp.saveBmp(argv[3],bmp.getBmpData(),bmp.getWidth(),bmp.getHeight(),bmp.getBitCount(),bmp.getColorTable());
 	}
 	//存储处理后的图片
-
-
 }
 
 	cout<<"succeed!"<<endl;

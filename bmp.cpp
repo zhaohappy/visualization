@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "bmp.h"
 #include "lable.h"
 #include <math.h>
@@ -311,7 +312,7 @@ void BMP::lableToBmp(){
 		}
 	}
 
-	len = (pow(16,6)-1)/max;       //计算颜色步长
+	len = (pow((float)16,(int)6)-1)/max;       //计算颜色步长
 	for(i=0;i<bmpHeight;i++){
 		for(j=0;j<bmpWidth;j++){
 			color=lable[i*bmpWidth+j]*len;  //计算当前区域编号对应的颜色
@@ -342,7 +343,7 @@ void BMP::pixToBmp(){
 		}
 	}
 	else{
-		for(int i=0;i<bmpHeight;i++){
+		for( i=0;i<bmpHeight;i++){
 			delete []pBmpBuf[i];
 		}
 		delete []pBmpBuf;
@@ -463,4 +464,7 @@ void BMP::bmpToPix(){
 	}
    // delete []rBmpBuf;
 	delete []tmpdata;
+}
+int * BMP::getLable(){
+	return lable;
 }
