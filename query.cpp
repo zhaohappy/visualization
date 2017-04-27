@@ -7,6 +7,8 @@
 #include <sstream>
 using namespace std;
 
+
+
 string getString(TCHAR *STR){
 	 int iLen = WideCharToMultiByte(CP_ACP, 0,STR, -1, NULL, 0, NULL, NULL);
 
@@ -23,19 +25,67 @@ string getStringByInt(int n){
 	newstr<<n;
 	return newstr.str();
 }
+
+string getQuery(string s){
+	string s1="select * from interval_li join ";
+	string s2=" on interval_li.taxiid=";
+	string s3=".taxiid and interval_li.start_time =";
+	string s4=".vacant_starttime and interval_li.end_time=";
+	string s5=".vacant_stoptime";
+	return s1+s+s2+s+s3+s+s4+s+s5;
+}
+
 int querySQL(int * lable,int bmpWidth,int bmpHeight){
-	string d="Taxi_shanghai4_1";
+
+	string dataBase[7]={
+	"Taxi_shanghai4_1",
+	"Taxi_shanghai5_1",
+	"Taxi_shanghai6_1",
+	"Taxi_shanghai7_1",
+	"Taxi_shanghai8_1",
+	"Taxi_shanghai9_1",
+	"Taxi_shanghai10_1"
+	};
+
+	string table[7]={
+	"displace_20150404",
+	"displace_20150405",
+	"displace_20150406",
+	"displace_20150407",
+	"displace_20150408",
+	"displace_20150409",
+	"displace_20150410"
+	};
+
 	string u="menglin";
 	string p="lml123456";
 	string s="127.0.0.1";
 	string t="1433";
-	SQL sql(d,u,p,s,t);
-	SQL sql2(d,u,p,s,t);
-	sql.openSql();
-	sql2.openSql();
+	SQL sql;
+	SQL sql2;
+	sql.setPassWord(p);
+	sql.setPort(t);
+	sql.setServer(s);
+	sql.setUser(u);
+	sql2.setPassWord(p);
+	sql2.setPort(t);
+	sql2.setServer(s);
+	sql2.setUser(u);
 
-	string query="select * from interval_li join displace_20150404 on interval_li.taxiid=displace_20150404.taxiid and interval_li.start_time = displace_20150404.vacant_starttime";
-	sql.selectSql(query);
+	for(int i=0;i<7;i++){
+	string d=dataBase[i];
+
+	sql.setDataBase(d);
+	sql2.setDataBase(d);
+
+	if(sql.openSql()==0||sql2.openSql()==0)
+		continue;
+	string query=getQuery(table[i]);
+	if(!sql.selectSql(query))
+		continue;
+
+	cout<<"ÕýÔÚ²éÑ¯£º"<<dataBase[i]<<endl;
+
 	_RecordsetPtr pRst=sql.getResult();
 	if(pRst==NULL)
 		return 0;
@@ -56,12 +106,14 @@ int querySQL(int * lable,int bmpWidth,int bmpHeight){
 			lat2=getString((TCHAR *)(_bstr_t)pRst->GetFields()->GetItem("lat2")->Value);
 			l1=getLabelForPoint(atof(lat1.c_str()),atof(lng1.c_str()),lable,bmpWidth,bmpHeight);
 			l2=getLabelForPoint(atof(lat2.c_str()),atof(lng2.c_str()),lable,bmpWidth,bmpHeight);
-			string query2="update interval_li set lable1="+getStringByInt(l1)+",lable2="+getStringByInt(l2)+"where id="+id;
+			string query2="update interval_li set lable_start="+getStringByInt(l1)+",lable_end="+getStringByInt(l2)+"where id="+id;
 
 			sql2.updateSql(query2);
 			cout<<lng1<<","<<lat1<<","<<l1<<","<<lng2<<","<<lat2<<","<<l2<<endl;
             pRst->MoveNext();                        
       }           
 	sql.closeSql();
+	sql2.closeSql();
+	}
 	return 1; 
 }
