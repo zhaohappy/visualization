@@ -82,6 +82,44 @@ int * Lable(int * data,int width,int height){
     int x1,x2,x3,x4;
 	int b1,b2,b3,b4;
 
+	//right->left top->bottom 
+	for(i=height-1;i>=0;i--){
+		for(j=width-1;j>=0;j--){
+			//cout<<data[i*width+j];
+			if(data[i*width+j]==0){
+				x1=i*width+j+1;
+				x2=(i-1)*width+j;
+				x3=i*width+j-1;
+				x4=(i+1)*width+j;
+
+				if(x1<0||x1>=width*height)
+					b1=0;
+				else
+					b1=lable[x1];
+				if(x2<0||x2>=width*height)
+					b2=0;
+				else
+					b2=lable[x2];
+				if(x3<0||x3>=width*height)
+					b3=0;
+				else
+					b3=lable[x3];
+				if(x4<0||x4>=width*height)
+					b4=0;
+				else
+					b4=lable[x4];
+
+				if(b1==0&&b2==0&&b3==0&&b4==0)
+					lable[i*width+j]=l++;
+				else{
+					lable[i*width+j]=minLable(b1,b2,b3,b4,l);
+				}
+			}
+
+		}
+
+	}
+
 	//left->right bottom->top 
 	for(i=0;i<height;i++){
 		for(j=0;j<width;j++){
@@ -193,43 +231,7 @@ int * Lable(int * data,int width,int height){
 		}
 
 	}
-	//right->left top->bottom 
-	for(i=height-1;i>=0;i--){
-		for(j=width-1;j>=0;j--){
-			//cout<<data[i*width+j];
-			if(data[i*width+j]==0){
-				x1=i*width+j+1;
-				x2=(i-1)*width+j;
-				x3=i*width+j-1;
-				x4=(i+1)*width+j;
-
-				if(x1<0||x1>=width*height)
-					b1=0;
-				else
-					b1=lable[x1];
-				if(x2<0||x2>=width*height)
-					b2=0;
-				else
-					b2=lable[x2];
-				if(x3<0||x3>=width*height)
-					b3=0;
-				else
-					b3=lable[x3];
-				if(x4<0||x4>=width*height)
-					b4=0;
-				else
-					b4=lable[x4];
-
-				if(b1==0&&b2==0&&b3==0&&b4==0)
-					lable[i*width+j]=l++;
-				else{
-					lable[i*width+j]=minLable(b1,b2,b3,b4,l);
-				}
-			}
-
-		}
-
-	}
+	
 	
     //bottom->top left->right
 	for(i=0;i<width;i++){
@@ -456,7 +458,7 @@ int * Lable(int * data,int width,int height){
 					b2=0;
 				else
 					b2=lable[x2];
-				if(x3<0||x3>=width*height)
+				if(x3<0||x3>=width*height||j==0)
 					b3=0;
 				else
 					b3=lable[x3];
@@ -473,8 +475,8 @@ int * Lable(int * data,int width,int height){
 			}
 
 		}
-
 	}
+	
 	cout<<"总区域数："<<getRegion(lable,width,height)<<endl;
     return lable;//返回编号数组
 }

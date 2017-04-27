@@ -60,14 +60,14 @@ void dilation(int* data, int width, int height)
 			tmpdata[i*width+j]=data[i*width+j];
 		}
 	}
-    for(i = 2;i < height - 1;i++)
+    for(i = 1;i < height - 1;i++)
     {
-        for(j = 2;j < width - 1;j++)
+        for(j = 1;j < width - 1;j++)
         {
             flag = 1;
-            for(int m = i-2 ;m < i + 2;m++)
+            for(int m = i-1 ;m < i + 2;m++)
             {
-                for(int n = j-2 ; n < j + 2;n++)
+                for(int n = j-1 ; n < j + 2;n++)
                 {
                     //自身及领域中若有一个为255
                     //则将该点设为255

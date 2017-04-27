@@ -48,49 +48,34 @@ int querySQL(int * lable,int bmpWidth,int bmpHeight){
 	};
 
 	string table[7]={
-	"displace_20150404",
-	"displace_20150405",
-	"displace_20150406",
-	"displace_20150407",
-	"displace_20150408",
-	"displace_20150409",
-	"displace_20150410"
+	"displace_final_20150404",
+	"displace_final_20150405",
+	"displace_final_20150406",
+	"displace_final_20150407",
+	"displace_final_20150408",
+	"displace_final_20150409",
+	"displace_final_20150410"
 	};
-
+	for(int i=0;i<7;i++){
+	string d=dataBase[i];
 	string u="menglin";
 	string p="lml123456";
 	string s="127.0.0.1";
 	string t="1433";
-	SQL sql;
-	SQL sql2;
-	sql.setPassWord(p);
-	sql.setPort(t);
-	sql.setServer(s);
-	sql.setUser(u);
-	sql2.setPassWord(p);
-	sql2.setPort(t);
-	sql2.setServer(s);
-	sql2.setUser(u);
-
-	for(int i=0;i<7;i++){
-	string d=dataBase[i];
-
-	sql.setDataBase(d);
-	sql2.setDataBase(d);
+	SQL sql(d,u,p,s,t);
+	SQL sql2(d,u,p,s,t);
 
 	if(sql.openSql()==0||sql2.openSql()==0)
 		continue;
 	string query=getQuery(table[i]);
 	if(!sql.selectSql(query))
 		continue;
-
 	cout<<"ÕýÔÚ²éÑ¯£º"<<dataBase[i]<<endl;
-
 	_RecordsetPtr pRst=sql.getResult();
 	if(pRst==NULL)
 		return 0;
 	if(lable==NULL)
-		return 0;
+		return 0; 
 	//string taxiid,start_time,end_time,interval,
 	string lng1,lat1,lng2,lat2,id;
 	int l1,l2;
@@ -113,7 +98,7 @@ int querySQL(int * lable,int bmpWidth,int bmpHeight){
             pRst->MoveNext();                        
       }           
 	sql.closeSql();
-	sql2.closeSql();
+	//sql2.closeSql();
 	}
 	return 1; 
 }
