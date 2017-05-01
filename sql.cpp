@@ -3,61 +3,6 @@
 #include <iostream>
 using namespace std;
 //步骤1：添加对ADO的支持
-int getNum(char c){
-
-	int t;
-	switch(c){
-	case '0':
-		t=0;
-		break;
-			case '1':
-		t=1;
-		break;
-			case '2':
-		t=2;
-		break;
-			case '3':
-		t=3;
-		break;
-			case '4':
-		t=4;
-		break;
-			case '5':
-		t=5;
-		break;
-			case '6':
-		t=6;
-		break;
-			case '7':
-		t=7;
-		break;
-			case '8':
-		t=8;
-		break;
-			case '9':
-		t=9;
-		break;
-	}
-	return t;
-}
-
-int getTime(string s,string e){
-
-	string sa=s.substr(11,8);
-	string ea=e.substr(11,8);
-
-	int ss=0,es=0;
-	
-	ss=3600*(getNum(sa[0])*10+getNum(sa[1]))+60*(getNum(sa[3])*10+getNum(sa[4]))+getNum(sa[6])*10+getNum(sa[7]);
-
-	es=3600*(getNum(ea[0])*10+getNum(ea[1]))+60*(getNum(ea[3])*10+getNum(ea[4]))+getNum(ea[6])*10+getNum(ea[7]);
-
-	if((es-ss)%60)
-		return (es-ss)/60;
-	else
-		return (int)((es-ss)/60)+1;
-}
-
 SQL::SQL(){
 	 CoInitialize(NULL); //初始化COM环境       
 	 pMyConnect.CreateInstance(__uuidof(Connection));
