@@ -9,6 +9,7 @@
 #include "sql.h"
 #include "div.h"
 #include "query.h"
+#include "count.h"
 using namespace std;
 void prinfUsage(){
 	cout<<"usage error!"<<endl
@@ -18,9 +19,10 @@ void prinfUsage(){
 			<<"-i <source bmp> <destination bmp> ........................................................inverse"<<endl
 			<<"-g <source bmp> <destination bmp> .......................................................gray"<<endl
 			<<"-l <source bmp> <destination bmp> .........................................................lable"<<endl
+			<<"-c ..............................................................................................................................  .count speed"<<endl
 			<<"-sl <source bmp> .................................................................................................lable to sql"<<endl
-			<<"-sd .................................................................................................distence to sql"<<endl
-			<<"-sa .................................................................................................all to sql"<<endl
+			<<"-sd ...............................................................................................................................distence to sql"<<endl
+			<<"-sa <source bmp> ................................................................................................all to sql"<<endl
 			<<"-u <times> <source bmp> <destination bmp> ......................................broaden"<<endl
 			<<"-b <threshold> <source gray bmp> <destination bool bmp> .........gray to bool"<<endl;
 }
@@ -30,8 +32,20 @@ int main(int argc,char * argv[]){
 		return 0;
 	}
 	int i;
-	char flag[3];
+	char flag[4];
 	strcpy(flag,argv[1]);
+
+	if(flag[1]=='c'){
+		if(argc!=2){
+			prinfUsage();
+			return 0;
+		}
+		else{
+			countDay();
+			return 0;
+		}
+	}
+
 	if(flag[1]=='s' && flag[2]=='l'){
 		if(argc!=3){
 			prinfUsage();
@@ -97,9 +111,10 @@ int main(int argc,char * argv[]){
 			cout<<"source bmp info: width: "<<bmp.getWidth()<<" height: "<<bmp.getHeight()<<" bitCount: "<<bmp.getBitCount()<<endl;
 			bmp.grayToBool(atoi(argv[2]));
 			bmp.saveBmp(argv[4],bmp.getBmpData(),bmp.getWidth(),bmp.getHeight(),bmp.getBitCount(),bmp.getColorTable());
+			return 0;
 		}
 	}
-	else if(flag[1]=='u'){
+	 if(flag[1]=='u'){
 			if(argc!=5){
 			prinfUsage();
 			return 0;
@@ -116,6 +131,7 @@ int main(int argc,char * argv[]){
 			cout<<"source bmp info: width: "<<bmp.getWidth()<<" height: "<<bmp.getHeight()<<" bitCount: "<<bmp.getBitCount()<<endl;
 			bmp.broaden(atoi(argv[2]));
 			bmp.saveBmp(argv[4],bmp.getBmpData(),bmp.getWidth(),bmp.getHeight(),bmp.getBitCount(),bmp.getColorTable());
+			return 0;
 		}
 	}
 	else{

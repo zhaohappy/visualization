@@ -6,6 +6,7 @@
 #include<iostream>
 #include<sstream>
 #include<math.h>
+//#include <Debug\msado15.tlh>
 using namespace std;
 
 const double EARTH_RADIUS=6378.004;
@@ -115,7 +116,7 @@ string getQuery(string s){
 }
 
 string getQueryALL(string s){
-	string s1="select * from";
+	string s1="select * from ";
 	return s1+s;
 }
 int getTImeLable(string s,string e){
@@ -267,107 +268,74 @@ int queryDistence(){
 	return 1; 
 }
 int queryAll(int * lable,int bmpWidth,int bmpHeight){
-	string dataBase[23]={
-		"Taxi_shanghai1_1",
-		"Taxi_shanghai2_1",
-		"Taxi_shanghai3_1",
-		"Taxi_shanghai11_1",
+	string dataBase[7]={
+		"Taxi_shanghai4_1",
 		"Taxi_shanghai12_1",
 		"Taxi_shanghai13_1",
 		"Taxi_shanghai14_1",
 		"Taxi_shanghai15_1",
 		"Taxi_shanghai16_1",
 		"Taxi_shanghai17_1",
-		"Taxi_shanghai18_1",
-		"Taxi_shanghai19_1",
-		"Taxi_shanghai20_1",
-		"Taxi_shanghai21_1",
-		"Taxi_shanghai22_1",
-		"Taxi_shanghai23_1",
-		"Taxi_shanghai24_1",
-		"Taxi_shanghai25_1",
-		"Taxi_shanghai26_1",
-		"Taxi_shanghai27_1",
-		"Taxi_shanghai28_1",
-		"Taxi_shanghai29_1",
-		"Taxi_shanghai30_1",
 	};
 
-	string table[23]={
-		"displace_final_20150401",
-		"displace_final_20150402",
-		"displace_final_20150403",
-		"displace_final_20150411",
+	string table[7]={
+		"displace_final_20150404",
 		"displace_final_20150412",
 		"displace_final_20150413",
 		"displace_final_20150414",
 		"displace_final_20150415",
 		"displace_final_20150416",
-		"displace_final_20150417",
-		"displace_final_20150418",
-		"displace_final_20150419",
-		"displace_final_20150420",
-		"displace_final_20150421",
-		"displace_final_20150422",
-		"displace_final_20150423",
-		"displace_final_20150424",
-		"displace_final_20150425",
-		"displace_final_20150426",
-		"displace_final_20150427",
-		"displace_final_20150428",
-		"displace_final_20150429",
-		"displace_final_20150430",
+		"displace_final_20150417"
 	};
-	for(int i=0;i<23;i++){
-		string d=dataBase[i];
-		string u="menglin";
-		string p="lml123456";
-		string s="127.0.0.1";
-		string t="1433";
-		SQL sql(d,u,p,s,t);
-		SQL sql2(d,u,p,s,t);
-
-		if(sql.openSql()==0||sql2.openSql()==0)
+	string lng1,lat1,lng2,lat2,id;
+	double distence,speed;
+	string taxiid,start_time,end_time,vacant;
+	int interval;
+	int lable_time;
+	int lable_start,lable_end;
+	string sr="',";
+	string sl="'";
+	string u="menglin";
+	string p="lml123456";
+	string s="127.0.0.1";
+	string t="1433";
+	string query;
+	_RecordsetPtr pRst;
+	for(int i=0;i<7;i++){
+		SQL sql(dataBase[i],u,p,s,t);
+		//SQL sql2(dataBase[i],u,p,s,t);
+		if(sql.openSql()==0)
 			continue;
-		string query=getQueryALL(table[i]);
-		if(!sql.selectSql(query))
+		if(!sql.selectSql(getQueryALL(table[i])))
 			continue;
 		cout<<"ÕýÔÚ²éÑ¯£º"<<dataBase[i]<<endl;
-		_RecordsetPtr pRst=sql.getResult();
+		 pRst=sql.getResult();
 		if(pRst==NULL)
 			return 0;
-		//string taxi id,start_time,end_time,interval,
-		string lng1,lat1,lng2,lat2,id;
-		double distence,speed;
-		string taxiid,start_time,end_time,vacant;
-		int interval;
-		int lable_time;
-		int lable_start,lable_end;
-		string sr="',";
-		string sl="'";
 		while(!pRst->adoEOF)               
 		{    
-			lng1=getString((TCHAR *)(_bstr_t)pRst->GetFields()->GetItem("lng1")->Value);
-			lat1=getString((TCHAR *)(_bstr_t)pRst->GetFields()->GetItem("lat1")->Value);
-			lng2=getString((TCHAR *)(_bstr_t)pRst->GetFields()->GetItem("lng2")->Value);
-			lat2=getString((TCHAR *)(_bstr_t)pRst->GetFields()->GetItem("lat2")->Value);
-			taxiid=getString((TCHAR *)(_bstr_t)pRst->GetFields()->GetItem("taxiid")->Value);
 			vacant=getString((TCHAR *)(_bstr_t)pRst->GetFields()->GetItem("vacant")->Value);
-			start_time=getString((TCHAR *)(_bstr_t)pRst->GetFields()->GetItem("vacant_starttime")->Value);
-			end_time=getString((TCHAR *)(_bstr_t)pRst->GetFields()->GetItem("vacant_stoptime")->Value);
 			if(vacant[0]=='1'){
+				lng1=getString((TCHAR *)(_bstr_t)pRst->GetFields()->GetItem("lng1")->Value);
+				lat1=getString((TCHAR *)(_bstr_t)pRst->GetFields()->GetItem("lat1")->Value);
+				lng2=getString((TCHAR *)(_bstr_t)pRst->GetFields()->GetItem("lng2")->Value);
+				lat2=getString((TCHAR *)(_bstr_t)pRst->GetFields()->GetItem("lat2")->Value);
+				taxiid=getString((TCHAR *)(_bstr_t)pRst->GetFields()->GetItem("taxiid")->Value);
+				start_time=getString((TCHAR *)(_bstr_t)pRst->GetFields()->GetItem("vacant_starttime")->Value);
+				end_time=getString((TCHAR *)(_bstr_t)pRst->GetFields()->GetItem("vacant_stoptime")->Value);
+
 				interval=getTime(start_time,end_time);
 				distence = getDistence(atof(lat1.c_str()),atof(lng1.c_str()),atof(lat2.c_str()),atof(lng1.c_str()))+getDistence(atof(lat1.c_str()),atof(lng1.c_str()),atof(lat1.c_str()),atof(lng2.c_str()));
 				speed=distence/interval*60.0;
 				lable_start=getLabelForPoint(atof(lat1.c_str()),atof(lng1.c_str()),lable,bmpWidth,bmpHeight);
 				lable_end=getLabelForPoint(atof(lat2.c_str()),atof(lng2.c_str()),lable,bmpWidth,bmpHeight);
 				lable_time=getTImeLable(start_time,end_time);
-				string query2="insert into interval_li values("+sl+taxiid+sr+sl+start_time+sr+sl+end_time+sr+getStringByInt(interval)+","+getStringByDouble(distence)+","+getStringByDouble(speed)+","+getStringByInt(lable_start)+","+getStringByInt(lable_end)+","+getStringByInt(lable_time)+")";
-				sql2.updateSql(query2);
+				query="insert into interval_li values("+sl+taxiid+sr+sl+start_time+sr+sl+end_time+sr+getStringByInt(interval)+","+getStringByDouble(distence)+","+getStringByDouble(speed)+","+getStringByInt(lable_start)+","+getStringByInt(lable_end)+","+getStringByInt(lable_time)+")";
+				sql.updateSql(query);
 				cout<<lng1<<","<<lat1<<","<<lng2<<","<<lat2<<",   "<<getStringByDouble(distence)<<endl;
 			}
 			pRst->MoveNext();                        
-		}           
+		}
 		sql.closeSql();
 		//sql2.closeSql();
 	}
