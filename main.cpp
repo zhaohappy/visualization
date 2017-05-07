@@ -10,6 +10,7 @@
 #include "div.h"
 #include "query.h"
 #include "count.h"
+#include "file.h"
 using namespace std;
 void prinfUsage(){
 	cout<<"usage error!"<<endl
@@ -22,6 +23,7 @@ void prinfUsage(){
 			<<"-c ..............................................................................................................................  .count speed"<<endl
 			<<"-sl <source bmp> .................................................................................................lable to sql"<<endl
 			<<"-sd ...............................................................................................................................distence to sql"<<endl
+			<<"-fl <source bmp>..................................................................................................lable to file"<<endl
 			<<"-sa <source bmp> ................................................................................................all to sql"<<endl
 			<<"-u <times> <source bmp> <destination bmp> ......................................broaden"<<endl
 			<<"-b <threshold> <source gray bmp> <destination bool bmp> .........gray to bool"<<endl;
@@ -91,6 +93,25 @@ int main(int argc,char * argv[]){
 		}
 		else{
 			queryDistence();
+			return 0;
+		}
+	}
+	if(flag[1]=='f' && flag[2]=='l'){
+		if(argc!=3){
+			prinfUsage();
+			return 1;
+		}
+		else{
+			BMP bmp;
+			if(!bmp.readBmp(argv[2]))
+			{
+				cout<<"open file failed! the file must be .bmp "<<endl;
+				return 0;
+			}
+			cout<<"source bmp info: width: "<<bmp.getWidth()<<" height: "<<bmp.getHeight()<<" bitCount: "<<bmp.getBitCount()<<endl;
+			bmp.bmpToBool(255);
+			bmp.lableToBmp();
+			writeLable("G:\\Menglin Li\\lable.json",bmp.getLable(),bmp.getWidth(),bmp.getHeight());
 			return 0;
 		}
 	}

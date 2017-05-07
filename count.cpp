@@ -30,16 +30,25 @@ string getStringByInt2(int n){
 }
 int countDay(){
 	int i,j;
-	string dataBase[7]={
-		"Taxi_shanghai11_1",
-		"Taxi_shanghai12_1",
-		"Taxi_shanghai13_1",
-		"Taxi_shanghai14_1",
-		"Taxi_shanghai15_1",
-		"Taxi_shanghai16_1",
-		"Taxi_shanghai17_1"
+	string dataBase[16]={
+		"Taxi_shanghai1_1",
+		"Taxi_shanghai2_1",
+		"Taxi_shanghai3_1",
+		"Taxi_shanghai18_1",
+		"Taxi_shanghai19_1",
+		"Taxi_shanghai20_1",
+		"Taxi_shanghai21_1",
+		"Taxi_shanghai22_1",
+		"Taxi_shanghai23_1",
+		"Taxi_shanghai24_1",
+		"Taxi_shanghai25_1",
+		"Taxi_shanghai26_1",
+		"Taxi_shanghai27_1",
+		"Taxi_shanghai28_1",
+		"Taxi_shanghai29_1",
+		"Taxi_shanghai30_1"
 	};
-	for( i=0;i<7;i++){
+	for( i=0;i<16;i++){
 		string filename="D:\\Menglin Li\\count\\"+dataBase[i]+"_speed"+".txt";
 		FILE * fp=fopen(filename.c_str(),"w");
 

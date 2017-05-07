@@ -1,0 +1,1 @@
+void writeLable(char* path,int * lable,int width,int height);

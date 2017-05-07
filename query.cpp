@@ -268,24 +268,42 @@ int queryDistence(){
 	return 1; 
 }
 int queryAll(int * lable,int bmpWidth,int bmpHeight){
-	string dataBase[7]={
-		"Taxi_shanghai4_1",
-		"Taxi_shanghai12_1",
-		"Taxi_shanghai13_1",
-		"Taxi_shanghai14_1",
-		"Taxi_shanghai15_1",
-		"Taxi_shanghai16_1",
-		"Taxi_shanghai17_1",
+	string dataBase[16]={
+		"Taxi_shanghai1_1",
+		"Taxi_shanghai2_1",
+		"Taxi_shanghai3_1",
+		"Taxi_shanghai18_1",
+		"Taxi_shanghai19_1",
+		"Taxi_shanghai20_1",
+		"Taxi_shanghai21_1",
+		"Taxi_shanghai22_1",
+		"Taxi_shanghai23_1",
+		"Taxi_shanghai24_1",
+		"Taxi_shanghai25_1",
+		"Taxi_shanghai26_1",
+		"Taxi_shanghai27_1",
+		"Taxi_shanghai28_1",
+		"Taxi_shanghai29_1",
+		"Taxi_shanghai30_1"
 	};
 
-	string table[7]={
-		"displace_final_20150404",
-		"displace_final_20150412",
-		"displace_final_20150413",
-		"displace_final_20150414",
-		"displace_final_20150415",
-		"displace_final_20150416",
-		"displace_final_20150417"
+	string table[16]={
+		"displace_final_20150401",
+		"displace_final_20150402",
+		"displace_final_20150403",
+		"displace_final_20150418",
+		"displace_final_20150419",
+		"displace_final_20150420",
+		"displace_final_20150421",
+		"displace_final_20150422",
+		"displace_final_20150423",
+		"displace_final_20150424",
+		"displace_final_20150425",
+		"displace_final_20150426",
+		"displace_final_20150427",
+		"displace_final_20150428",
+		"displace_final_20150429",
+		"displace_final_20150430"
 	};
 	string lng1,lat1,lng2,lat2,id;
 	double distence,speed;
@@ -301,7 +319,7 @@ int queryAll(int * lable,int bmpWidth,int bmpHeight){
 	string t="1433";
 	string query;
 	_RecordsetPtr pRst;
-	for(int i=0;i<7;i++){
+	for(int i=0;i<16;i++){
 		SQL sql(dataBase[i],u,p,s,t);
 		//SQL sql2(dataBase[i],u,p,s,t);
 		if(sql.openSql()==0)
